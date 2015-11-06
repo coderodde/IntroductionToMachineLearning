@@ -2,8 +2,6 @@ import loadmovielens as reader
 
 ratings, movie_dictionary, user_ids, item_ids, movie_names = reader.read_movie_lens_data()
 
-#print(ratings[0])
-
 def jaccard_coefficient(movie_id_a, movie_id_b):
     if movie_id_a == movie_id_b:
         return 1.0
@@ -85,3 +83,47 @@ star_warriors = find_k_closest(star_wars_id, 5)
 
 for s in star_warriors:
     print movie_names[s[0]], ", coefficient: ", s[1]
+
+
+def correlation_coefficient(movie_id_a, movie_id_b):
+    if movie_id_a == movie_id_b:
+        return 1.0
+
+    ratings_a = []
+    ratings_b = []
+
+    filter_a = set()
+    filter_b = set()
+
+    for r in ratings:
+         if r[1] == movie_id_a:
+             ratings_a.append(r)
+             filter_a.add(r[0])
+
+         if r[1] == movie_id_b:
+             ratings_b.append(r)
+             filter_b.add(r[0])
+
+    common_filter = filter_a.intersection(filter_b)
+    #print len(filter_a), ", ", len(filter_b), ", ", len(common_filter)
+
+    pruned_ratings_a = []
+    pruned_ratings_b = []
+
+    for r in ratings_a:
+        if r[0] in common_filter:
+            pruned_ratings_a.append(r)
+
+    for r in ratings_b:
+        if r[0] in common_filter:
+            pruned_ratings_b.append(r)
+
+    #print len(pruned_ratings_a), ", and yo ", len(pruned_ratings_b)
+
+    # Now sort the pruned rating lists by user ID's
+    pruned_ratings_a.sort(key=lambda x: x[0])
+    pruned_ratings_b.sort(key=lambda x: x[0])
+
+    
+
+correlation_coefficient(1, 2)
