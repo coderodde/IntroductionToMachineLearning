@@ -4,12 +4,13 @@ import math
 
 ratings, movie_dictionary, user_ids, item_ids, movie_names = reader.read_movie_lens_data()
 
+
 def jaccard_coefficient(movie_id_a, movie_id_b):
     if movie_id_a == movie_id_b:
         return 1.0
 
     user_ids_a = []
-    user_ids_b = [] #rating = [user_id, movie_id]
+    user_ids_b = []  # rating = [user_id, movie_id]
 
     for r in ratings:
         if r[1] == movie_id_a:
@@ -21,8 +22,10 @@ def jaccard_coefficient(movie_id_a, movie_id_b):
     s = set(user_ids_a).intersection(set(user_ids_b))
     return 1.0 * len(s) / (len(user_ids_a) + len(user_ids_b) - len(s))
 
+
 def coefficient_compare(a, b):
     return a[1] > b[1]
+
 
 # Given the movie ID 'target_movie_id' and an integer 'k',
 # find out the list with at most 'k' entries containing tuples
@@ -60,14 +63,15 @@ def find_k_closest(target_movie_id, k):
 
     return ret[1:k + 1]
 
+
 print "--- Jaccard coefficient between 'Toy Story' and 'GoldenEye' ---"
-toy_story_id  = reader.give_me_movie_id('Toy Story', movie_dictionary)[0][0]
+toy_story_id = reader.give_me_movie_id('Toy Story', movie_dictionary)[0][0]
 golden_eye_id = reader.give_me_movie_id('GoldenEye', movie_dictionary)[0][0]
 
 print jaccard_coefficient(toy_story_id, golden_eye_id)
 
 print "--- Jaccard coefficient between 'Three Colors: Red' and 'Three Colors: Blue' ---"
-red_id  = reader.give_me_movie_id('Three Colors: Red', movie_dictionary)[0][0]
+red_id = reader.give_me_movie_id('Three Colors: Red', movie_dictionary)[0][0]
 blue_id = reader.give_me_movie_id('Three Colors: Blue', movie_dictionary)[0][0]
 
 print jaccard_coefficient(red_id, blue_id)
@@ -86,17 +90,13 @@ star_warriors = find_k_closest(star_wars_id, 5)
 for s in star_warriors:
     print movie_names[s[0]], ", coefficient: ", s[1]
 
+
 def compute_correlation(ratings_a, ratings_b):
-    print "Correlationyooo"
     scores_a = [x[2] for x in ratings_a]
     scores_b = [x[2] for x in ratings_b]
 
-    # print len(scores_a) == len(scores_b)
-
     mean_a = np.mean(scores_a)
     mean_b = np.mean(scores_b)
-
-    print mean_a, " and ", mean_b
 
     upper_sum = 0.0
     lower_sum1 = 0.0
@@ -109,6 +109,7 @@ def compute_correlation(ratings_a, ratings_b):
 
     return upper_sum / math.sqrt(lower_sum1 * lower_sum2)
 
+
 def correlation_coefficient(movie_id_a, movie_id_b):
     if movie_id_a == movie_id_b:
         return 1.0
@@ -120,16 +121,15 @@ def correlation_coefficient(movie_id_a, movie_id_b):
     filter_b = set()
 
     for r in ratings:
-         if r[1] == movie_id_a:
-             ratings_a.append(r)
-             filter_a.add(r[0])
+        if r[1] == movie_id_a:
+            ratings_a.append(r)
+            filter_a.add(r[0])
 
-         if r[1] == movie_id_b:
-             ratings_b.append(r)
-             filter_b.add(r[0])
+        if r[1] == movie_id_b:
+            ratings_b.append(r)
+            filter_b.add(r[0])
 
     common_filter = filter_a.intersection(filter_b)
-    #print len(filter_a), ", ", len(filter_b), ", ", len(common_filter)
 
     pruned_ratings_a = []
     pruned_ratings_b = []
@@ -142,12 +142,15 @@ def correlation_coefficient(movie_id_a, movie_id_b):
         if r[0] in common_filter:
             pruned_ratings_b.append(r)
 
-    #print len(pruned_ratings_a), ", and yo ", len(pruned_ratings_b)
-
     # Now sort the pruned rating lists by user ID's
     pruned_ratings_a.sort(key=lambda x: x[0])
     pruned_ratings_b.sort(key=lambda x: x[0])
 
     return compute_correlation(pruned_ratings_a, pruned_ratings_b)
 
-print correlation_coefficient(1, 2)
+
+print "--- Correlation coefficient between 'Toy Story' and 'GoldenEye' ---"
+print correlation_coefficient(toy_story_id, golden_eye_id)
+
+print "--- Correlation coefficient between 'Three Colors: Red' and 'Three Color: Blue' ---"
+print correlation_coefficient(red_id, blue_id)
