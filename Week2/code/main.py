@@ -1,4 +1,6 @@
 import loadmovielens as reader
+import numpy as np
+import math
 
 ratings, movie_dictionary, user_ids, item_ids, movie_names = reader.read_movie_lens_data()
 
@@ -84,6 +86,28 @@ star_warriors = find_k_closest(star_wars_id, 5)
 for s in star_warriors:
     print movie_names[s[0]], ", coefficient: ", s[1]
 
+def compute_correlation(ratings_a, ratings_b):
+    print "Correlationyooo"
+    scores_a = [x[2] for x in ratings_a]
+    scores_b = [x[2] for x in ratings_b]
+
+    # print len(scores_a) == len(scores_b)
+
+    mean_a = np.mean(scores_a)
+    mean_b = np.mean(scores_b)
+
+    print mean_a, " and ", mean_b
+
+    upper_sum = 0.0
+    lower_sum1 = 0.0
+    lower_sum2 = 0.0
+
+    for i in range(0, len(scores_a)):
+        upper_sum += (scores_a[i] - mean_a) * (scores_b[i] - mean_b)
+        lower_sum1 += (scores_a[i] - mean_a) ** 2
+        lower_sum2 += (scores_b[i] - mean_b) ** 2
+
+    return upper_sum / math.sqrt(lower_sum1 * lower_sum2)
 
 def correlation_coefficient(movie_id_a, movie_id_b):
     if movie_id_a == movie_id_b:
@@ -124,6 +148,6 @@ def correlation_coefficient(movie_id_a, movie_id_b):
     pruned_ratings_a.sort(key=lambda x: x[0])
     pruned_ratings_b.sort(key=lambda x: x[0])
 
-    
+    return compute_correlation(pruned_ratings_a, pruned_ratings_b)
 
-correlation_coefficient(1, 2)
+print correlation_coefficient(1, 2)
