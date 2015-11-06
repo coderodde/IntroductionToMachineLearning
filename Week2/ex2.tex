@@ -138,65 +138,8 @@ P(A, B) = \sum_{\textbf{x} \in A} \sum_{\textbf{y} \in B} \frac{P(\textbf{x}, \t
 \color{blue}
 \section*{Problem 4 (15 points)}
 In this problem we will consider similarity measures for movies on the Movielens dataset.
- \color{black}
+\color{black}
  
-\begin{itemize}
- \item[(a)] 
- \begin{verbatim}
- # Octave/Matlab
- cd path/to/movielens
- run('loadmovielens.m')
- [ratings items userids itemids] = loadmovielens();
- \end{verbatim}
+\subsection*{(b)} The Jaccard coefficient for 'Three Colors: Red' and 'Three Colors: Blue' seems to be 0.598 
  
- \item[(b)]
- The function below loads a map mapping each movie ID $i$ to a list of user ID's of those users, that have ranked the film $i$.
- \begin{verbatim}
- function m = load_movie_to_rankings_map(items, ratings)
- m = {};
- # Initialize the map keys (movie IDs).
- for mid = 1:size(items)(2)
-   m{mid} = [];
- endfor
- # For each ranking...
- for rid = 1:size(ratings)(1)
-   r = ratings(rid,:); 
-   m{r(2)} (size(m{r(2)}) + 1) = r(1);   
- endfor
- endfunction
- \end{verbatim}  
-
- The actual Jaccard measure:
- \begin{verbatim}
- function coef = Jaccard(id1, id2, map)
-   a = map{id1};
-   b = map{id2};
-   coef = size(intersect(a, b))(2) / size(union(a, b))(2);
- endfunction
- \end{verbatim}
-
- \begin{verbatim}
- function coef = Jaccard2(id1, id2, ratings)
-   coef = -1;
-   a = [];
-   b = [];
-   # Accumulate sets of user IDs:
-   # 'a' for the users who ranked the film with ID 'id1', and
-   # 'b' for the users who ranked the film with ID 'id2'.
-   for i = 1:size(ratings)(1)
-     if (ratings(i, 2) == id1)
-       # Really nasty looking "idiom" for appending to a list.
-       a(size(a)(2) + 1) = ratings(i, 1);
-     elseif (ratings(i, 2) == id2)
-       b(size(b)(2) + 1) = ratings(i, 1);
-     endif 
-   endfor
-   coef = size(intersect(a,b))(2) / size(union(a, b))(2);
- endfunction
- \end{verbatim}
- The ID of 'Three Colors: Red' is 59, and the ID of 'Tree Colors: Blue' is 60, and the above function returns a Jaccard coefficient of 0.59783 for them.
- \end{itemize}
-
-Okay, its near 7 PM Friday, so I have to give up on this one. :'(  Jaccard(id1, id2, map) gives me consistently 0.21548 instead of 0.21712 for Toy Story vs. GoldenEye.
-
 \end{document}
