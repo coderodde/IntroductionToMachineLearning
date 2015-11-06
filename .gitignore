@@ -1,3 +1,7 @@
 .DS_Store
 data
 movielens
+*.aux
+*.log
+*.out
+*.synctex.gz

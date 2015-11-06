@@ -24,8 +24,10 @@ def jaccard_coefficient(movie_id_a, movie_id_b):
 def coefficient_compare(a, b):
     return a[1] > b[1]
 
-# Given the movie ID and an integer k, find out the list with atmost
-# k movies IDs that are closest to the target movie ID.
+# Given the movie ID 'target_movie_id' and an integer 'k',
+# find out the list with at most 'k' entries containing tuples
+# (movie_id, Jaccard) that are closest by Jaccard coefficient to
+# the movie with the ID 'target_movie_id'.
 def find_k_closest(target_movie_id, k):
     map_from_movie_to_user_id_list = dict()
 
@@ -51,25 +53,35 @@ def find_k_closest(target_movie_id, k):
                     fast_jaccard_coefficient(map_from_movie_to_user_id_list[movie_id],
                                              map_from_movie_to_user_id_list[target_movie_id])))
 
-    print "Map size: ", len(map_from_movie_to_user_id_list)
-
     ret = sorted(ret, key=lambda x: -x[1])
 
-    while len(ret) > k:
+    while len(ret) > k + 1:
         ret.pop()
 
-    for t in ret:
-        print t[0], " ", t[1]
+    return ret[1:k + 1]
 
-print "Closest 5"
-print find_k_closest(1, 5)
-
+print "--- Jaccard coefficient between 'Toy Story' and 'GoldenEye' ---"
 toy_story_id  = reader.give_me_movie_id('Toy Story', movie_dictionary)[0][0]
 golden_eye_id = reader.give_me_movie_id('GoldenEye', movie_dictionary)[0][0]
 
 print jaccard_coefficient(toy_story_id, golden_eye_id)
 
+print "--- Jaccard coefficient between 'Three Colors: Red' and 'Three Colors: Blue' ---"
 red_id  = reader.give_me_movie_id('Three Colors: Red', movie_dictionary)[0][0]
 blue_id = reader.give_me_movie_id('Three Colors: Blue', movie_dictionary)[0][0]
 
 print jaccard_coefficient(red_id, blue_id)
+
+print "--- Closest 5 movies to 'Taxi Driver'---"
+taxi_driver_id = reader.give_me_movie_id('Taxi Driver', movie_dictionary)[0][0]
+taxi_passengers = find_k_closest(taxi_driver_id, 5)
+
+for t in taxi_passengers:
+    print movie_names[t[0]], ", coefficient: ", t[1]
+
+print "--- Closest 5 movies to 'Star Wars (1977) ---"
+star_wars_id = reader.give_me_movie_id('Star Wars', movie_dictionary)[0][0]
+star_warriors = find_k_closest(star_wars_id, 5)
+
+for s in star_warriors:
+    print movie_names[s[0]], ", coefficient: ", s[1]
