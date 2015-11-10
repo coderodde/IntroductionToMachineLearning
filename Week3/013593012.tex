@@ -58,4 +58,23 @@ The labels are:
 6 3 0 1 8 7 3 8 2 1
 \end{verbatim}
 \end{center}
+
+\subsection*{(c)}
+\color{blue}
+Divide the data into two parts: A `training set` consisting of the first 2,500 images (and associated labels), and a `test set` containing the remaining 2,500 images (and their associated labels).
+\color{black}
+
+\subsection*{Solution to (c)}
+Check!
+
+\subsection*{(d)}
+\color{blue}
+For each of the ten classes (digits 0-9), compute a class \textit{prototype} given by the mean of all the images in the training set that belong to this class. That is, select from the training set all images of class '0' and compute the mean image of these; this should look sort of like a zero. Do this for all ten classes, and plot the resulting images. Do they look like what you would expect?
+\color{black}
+
+\subsection*{Solution to (d)}
+\begin{center}
+\includegraphics[scale=0.5]{MNISTPrototypes}
+\end{center}
+Obviously, the prototypes look good.
 \end{document}

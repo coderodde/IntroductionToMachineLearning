@@ -20,10 +20,10 @@ X, y = mnist.read_mnist_training_data(TOTAL_IMAGES)
 
 #print "len(X): ", len(X), ", len(y): ", len(y)
 indices = np.random.choice(5000, 100, replace=False)
-mnist.visualize(X[indices])
-print y[indices]
+#mnist.visualize(X[indices])
+#print y[indices]
 
-def split(X):
+def split(X, y):
     XTrain = []
     XTest  = []
 
@@ -42,6 +42,30 @@ def split(X):
         yTest.append(y[i])
 
     return XTrain, XTest, yTrain, yTest
+
+def compute_prototype(XTrain, yTrain, digit):
+    prototype = np.array([0 for x in range(0, len(XTrain[0]))])
+    count = 0
+    length = len(XTrain)
+
+    for index in range(0, length):
+        if yTrain[index] == digit:
+            count += 1
+            prototype += XTrain[index]
+
+    return prototype / count
+
+def create_prototypes(XTrain, yTrain):
+    prototypes = []
+
+    for digit in range(0, 10):
+        prototypes.append(compute_prototype(XTrain, yTrain, digit))
+
+    return np.array(prototypes)
+
+XTrain, XTest, yTrain, yTest = split(X, y)
+prototypes = create_prototypes(XTrain, yTrain)
+mnist.visualize(prototypes)
 
 def my_info():
     """
