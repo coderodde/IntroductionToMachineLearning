@@ -63,6 +63,21 @@ def create_prototypes(XTrain, yTrain):
 XTrain, XTest, yTrain, yTest = split(X, y)
 prototypes = create_prototypes(XTrain, yTrain)
 
+def error_rate(conf_matrix):
+    total = 0
+    matches = 0
+    n = len(conf_matrix)
+
+    for y in range(0, n):
+        for x in range(0, n):
+            total += conf_matrix[y][x]
+
+    for i in range(0, n):
+        matches += conf_matrix[i][i]
+
+    accuracy = 1.0 * matches / total
+    return 1 - accuracy
+
 def my_info():
     """
     :return: DO NOT FORGET to include your student ID as a string, this function is used to evaluate your code and results
@@ -100,9 +115,10 @@ def KNN():
         x = predicted_labels[i]
         confusion_matrix[y][x] += 1
 
-    for y in range(0, len(confusion_matrix)):
-        print confusion_matrix[y]
+    #for y in range(0, len(confusion_matrix)):
+    #    print confusion_matrix[y]
 
+    #print error_rate(confusion_matrix)
     return confusion_matrix
 
 
@@ -136,15 +152,16 @@ def simple_EC_classifier():
         x = predicted_labels[i]
         confusion_matrix[y][x] += 1
 
-    for y in range(0, len(confusion_matrix)):
-        print confusion_matrix[y]
+    #for y in range(0, len(confusion_matrix)):
+    #    print confusion_matrix[y]
 
+    #print error_rate(confusion_matrix)
     return confusion_matrix
 
-print "*** Prototype classifier ***"
-simple_EC_classifier()
-print "*** KNN ***"
-KNN()
+#print "*** Prototype classifier ***"
+#simple_EC_classifier()
+#print "*** KNN ***"
+#KNN()
 
 def main():
     """
@@ -155,6 +172,5 @@ def main():
     results += np.array_str(np.diagonal(KNN()))
     print results + '\n'
 
-### REMEMBER TO UNCOMMENT ME ###
-#if __name__ == '__main__':
-#    main()
+if __name__ == '__main__':
+    main()

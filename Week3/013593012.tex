@@ -77,4 +77,54 @@ For each of the ten classes (digits 0-9), compute a class \textit{prototype} giv
 \includegraphics[scale=0.5]{MNISTPrototypes}
 \end{center}
 Obviously, the prototypes look good.
+
+\subsection*{(e)}
+\color{blue}
+For each of the images in the test set, compute the Euclidean distance of the image to all 10 prototypes, and classify the test image into the class for which the distance to the prototype is the smallest.  So, if a test image is closer to the prototype for `3' than it is to the prototypes for any of the other digits, predict its class to be `3'.  Compute and display the resulting
+\textit{confusion matrix}.
+\color{black}
+
+\subsection*{Solution to (e)}
+The confusion matrix for the prototype-based classifier is
+\begin{verbatim}
+228   0   1   2   0   4   6   2   2   0
+0   281   1   0   0   3   0   0   1   0
+2    19 192   5   5   2   2   2  11   1
+1     9   4 193   2  20   0   5  11   8
+1     4   1   0 202   0   5   2   0  40
+9    16   1  14  11 136   2   6   1  11
+5    12  15   0   9   8 198   0   0   0
+1    14   1   0  15   0   0 232   1  11
+3    13   9  25   4  19   1   1 151  14
+3     4   6   2  38   2   1  14   2 179
+\end{verbatim}
+
+\subsection*{(f)}
+\color{blue}
+Classify each of the test images with a nearest neighbor classifer: For each of the test images, compute its Euclidean distance to all (2,500) of the training images, and let the predicted class be the class of the closest training image. Compute and display the resulting confusion matrix.
+\color{black}
+
+\subsection*{Solution to (f)}
+The confusion matrix of the kNN-classifier is
+\begin{verbatim}
+241   0   0   2   0   1   1   0   0   0
+  0 283   0   0   1   1   0   1   0   0
+  2   6 216   5   0   1   1   5   5   0
+  0   0   3 221   2  11   2   4   5   5
+  0   3   0   0 231   0   0   2   0  19
+  5   3   0   6   0 183   5   1   1   3
+  3   1   0   0   1   1 240   0   0   1
+  0   3   2   0   6   0   0 257   0   7
+  4   5   9  10   1   8   0   2 196   5
+  2   2   0   2  12   1   2  11   0 219
+\end{verbatim}
+
+\subsection*{(g)}
+\color{blue}
+Compute and compare the error rates of both classifiers (the prototype-based classifier and the nearest neighbor classifier). Which is working better?  Based on the confusion matrix, which digits are confused with each other? Why do you think this is?
+\color{black}
+
+\subsection*{Solution to (g)}
+The error rate of the prototype-based classifier is 0.2032 and the error rate of kNN is only 0.852. Obviously, kNN surpasses prototype-based classifier. It seems that 4 and 9, 3 and 8 are problematic. Obviously, the aforementioned digits in each pair share a lot of common geometry.
+
 \end{document}
