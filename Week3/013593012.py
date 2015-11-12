@@ -1,6 +1,7 @@
 import numpy as np
 import mnist_load_show as mnist
 
+
 '''
 use pdis in order to find the the distance
 '''
@@ -18,10 +19,6 @@ TOTAL_IMAGES = 5000
 X, y = mnist.read_mnist_training_data(TOTAL_IMAGES)
 ###################################################
 
-#print "len(X): ", len(X), ", len(y): ", len(y)
-indices = np.random.choice(5000, 100, replace=False)
-#mnist.visualize(X[indices])
-#print y[indices]
 
 def split(X, y):
     XTrain = []
@@ -65,7 +62,6 @@ def create_prototypes(XTrain, yTrain):
 
 XTrain, XTest, yTrain, yTest = split(X, y)
 prototypes = create_prototypes(XTrain, yTrain)
-mnist.visualize(prototypes)
 
 def my_info():
     """
@@ -79,8 +75,55 @@ def KNN():
     Implement the classifier using KNN and return the confusion matrix
     :return: the confusion matrix regarding the result obtained using knn method
     """
-    knn_conf_matrix = ''
-    return knn_conf_matrix
+    predicted_labels = []
+
+    # def predict(image):
+    #     best_digit = 0;
+    #     best_distance = cdist(prototypes[0], image, 'euclidean')
+    #
+    #     for digit in range(1, 10):
+    #         tentative_distance = cdist(prototypes[digit], image, 'euclidean')
+    #
+    #         if best_distance < tentative_distance:
+    #             best_distance = tentative_distance
+    #             best_digit = digit
+    #
+    #     return best_digit
+
+    distance_matrix = cdist(XTest, XTrain, 'euclidean')
+
+    def find_best_label(dist_vector):
+        index = 0
+        closest_index = 0
+        closest_distance = distance_matrix
+        best_digit = 0
+        best_dist = dist_vector[0]
+
+        for digit in range(1, len(dist_vector)):
+            tentative_dist = dist_vector[digit]
+            if best_dist > tentative_dist:
+                best_dist = tentative_dist
+                best_digit = digit
+
+        return best_digit
+
+    for i in range(0, len(distance_matrix)):
+        predicted_labels.append(find_best_label(distance_matrix[i]))
+
+    for i in range(0, 100):
+        print "Predicted: ", predicted_labels[i], ", actual: ", yTest[i]
+
+    confusion_matrix = [[0 for i in range(0, 10)] for j in range(0, 10)]
+
+    for i in range(0, len(predicted_labels)):
+        y = yTest[i]
+        x = predicted_labels[i]
+        confusion_matrix[y][x] += 1
+
+    for y in range(0, len(confusion_matrix)):
+        print confusion_matrix[y]
+
+    return confusion_matrix
 
 
 def simple_EC_classifier():
@@ -88,10 +131,55 @@ def simple_EC_classifier():
     Implement the classifier based on the Euclidean distance
     :return: the confusing matrix obtained regarding the result obtained using simple Euclidean distance method
     """
-    simple_EC_conf_martix = ''
-    return simple_EC_conf_martix
+    predicted_labels = []
+
+    # def predict(image):
+    #     best_digit = 0;
+    #     best_distance = cdist(prototypes[0], image, 'euclidean')
+    #
+    #     for digit in range(1, 10):
+    #         tentative_distance = cdist(prototypes[digit], image, 'euclidean')
+    #
+    #         if best_distance < tentative_distance:
+    #             best_distance = tentative_distance
+    #             best_digit = digit
+    #
+    #     return best_digit
+
+    distance_matrix = cdist(XTest, prototypes, 'euclidean')
+
+    def find_best_label(dist_vector):
+        best_digit = 0
+        best_dist = dist_vector[0]
+
+        for digit in range(1, len(dist_vector)):
+            tentative_dist = dist_vector[digit]
+            if best_dist > tentative_dist:
+                best_dist = tentative_dist
+                best_digit = digit
+
+        return best_digit
+
+    for i in range(0, len(distance_matrix)):
+        predicted_labels.append(find_best_label(distance_matrix[i]))
+
+    for i in range(0, 100):
+        print "Predicted: ", predicted_labels[i], ", actual: ", yTest[i]
+
+    confusion_matrix = [[0 for i in range(0, 10)] for j in range(0, 10)]
+
+    for i in range(0, len(predicted_labels)):
+        y = yTest[i]
+        x = predicted_labels[i]
+        confusion_matrix[y][x] += 1
+
+    for y in range(0, len(confusion_matrix)):
+        print confusion_matrix[y]
+
+    return confusion_matrix
 
 
+simple_EC_classifier()
 
 
 def main():
