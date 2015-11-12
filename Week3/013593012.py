@@ -76,42 +76,22 @@ def KNN():
     :return: the confusion matrix regarding the result obtained using knn method
     """
     predicted_labels = []
-
-    # def predict(image):
-    #     best_digit = 0;
-    #     best_distance = cdist(prototypes[0], image, 'euclidean')
-    #
-    #     for digit in range(1, 10):
-    #         tentative_distance = cdist(prototypes[digit], image, 'euclidean')
-    #
-    #         if best_distance < tentative_distance:
-    #             best_distance = tentative_distance
-    #             best_digit = digit
-    #
-    #     return best_digit
-
     distance_matrix = cdist(XTest, XTrain, 'euclidean')
 
     def find_best_label(dist_vector):
-        index = 0
-        closest_index = 0
-        closest_distance = distance_matrix
-        best_digit = 0
-        best_dist = dist_vector[0]
+        best_index = 0
+        best_distance = dist_vector[0]
 
-        for digit in range(1, len(dist_vector)):
-            tentative_dist = dist_vector[digit]
-            if best_dist > tentative_dist:
-                best_dist = tentative_dist
-                best_digit = digit
+        for index in range(1, len(dist_vector)):
+            tentative_dist = dist_vector[index]
+            if best_distance > tentative_dist:
+                best_distance = tentative_dist
+                best_index = index
 
-        return best_digit
+        return yTrain[best_index]
 
     for i in range(0, len(distance_matrix)):
         predicted_labels.append(find_best_label(distance_matrix[i]))
-
-    for i in range(0, 100):
-        print "Predicted: ", predicted_labels[i], ", actual: ", yTest[i]
 
     confusion_matrix = [[0 for i in range(0, 10)] for j in range(0, 10)]
 
@@ -132,20 +112,6 @@ def simple_EC_classifier():
     :return: the confusing matrix obtained regarding the result obtained using simple Euclidean distance method
     """
     predicted_labels = []
-
-    # def predict(image):
-    #     best_digit = 0;
-    #     best_distance = cdist(prototypes[0], image, 'euclidean')
-    #
-    #     for digit in range(1, 10):
-    #         tentative_distance = cdist(prototypes[digit], image, 'euclidean')
-    #
-    #         if best_distance < tentative_distance:
-    #             best_distance = tentative_distance
-    #             best_digit = digit
-    #
-    #     return best_digit
-
     distance_matrix = cdist(XTest, prototypes, 'euclidean')
 
     def find_best_label(dist_vector):
@@ -163,9 +129,6 @@ def simple_EC_classifier():
     for i in range(0, len(distance_matrix)):
         predicted_labels.append(find_best_label(distance_matrix[i]))
 
-    for i in range(0, 100):
-        print "Predicted: ", predicted_labels[i], ", actual: ", yTest[i]
-
     confusion_matrix = [[0 for i in range(0, 10)] for j in range(0, 10)]
 
     for i in range(0, len(predicted_labels)):
@@ -178,9 +141,10 @@ def simple_EC_classifier():
 
     return confusion_matrix
 
-
+print "*** Prototype classifier ***"
 simple_EC_classifier()
-
+print "*** KNN ***"
+KNN()
 
 def main():
     """
