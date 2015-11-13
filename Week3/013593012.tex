@@ -38,6 +38,41 @@ The goal is to minimize the expected cost (which is also the long-term arverage 
 
 \noindent Give the optimal policy of answering `+`, `-`, or `don't know` for each object, as a function of the value of $\alpha$. That is, for any given value of $\alpha$ (for $0 \leq \alpha \leq 1$) what is the best answer of the three possibilities?
 \color{black}
+
+\subsection*{Solution}
+So answering `+` has the cost of $0 \cdot \alpha + 10 (1 - \alpha) = 10 - 10\alpha$; the cost of ansering `-` is $3\alpha + (1 - \alpha) \cdot 0 = 3\alpha$; the cost of answering `don't know` is $1 \cdot \alpha + (1 - \alpha) \cdot 2 = 2 - \alpha$.
+
+Next, let us compute all three intersection points between any pair of lines.
+\begin{align*}
+10 - 10\alpha &= 3\alpha \\
+10 &= 13\alpha \\
+\alpha &= \frac{10}{13}.
+\end{align*}
+The interesection $y$-coordinate is $\frac{30}{13} = 2\frac{4}{13}$, and thus, the point is $A = (\frac{10}{13}, 2\frac{4}{13})$.
+
+\begin{align*}
+10 - 10\alpha &= 2 - \alpha \\
+8 &= 9 \alpha \\
+\alpha &= \frac{8}{9}.
+\end{align*}
+The intersection $y$-coordinate is $2 - \frac{8}{9} = 1\frac{1}{9}$, and thus, the point is $B = (\frac{8}{9}, 1\frac{1}{9})$.
+
+\begin{align*}
+3\alpha &= 2 - \alpha \\
+4\alpha &= 2 \\
+\alpha &= \frac{1}{2}.
+\end{align*}
+The intesection $y$-coordinate is $3 \frac{1}{2} = \frac{3}{2}$, and thus, the point is $C = (\frac{1}{2}, \frac{3}{2})$.
+
+After plotting $A$, $B$ and $C$, it becomes obvious that $A$ is above the line segment $BC$. Suppose that for any $I = A, B, C$, $I(x)$ is the $y$-coordinate of the point at position $x$ on line $I$, we are interested in the area below the function $\min (A(x), B(x), C(x))$. The function in question may be reconstructed from the three points we calculated:
+\[
+P(\alpha) = 
+\begin{cases}
+`-` & \text{if } \alpha \in [0, \frac{1}{2}] \\
+`\text{don't know}` & \text{if } \alpha \in (\frac{1}{2}, \frac{8}{9}] \\
+`+` & \text{if } \alpha \in (\frac{8}{9}, 1] \\
+\end{cases}
+\]
 \section*{Problem 2 (3 points)}
 
 \section*{Problem 3 (3 points)}
