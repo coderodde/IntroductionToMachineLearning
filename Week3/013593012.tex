@@ -20,7 +20,24 @@
  \maketitle
 
 \section*{Problem 1 (3 points)}
+\color{blue}
+Consider a binary classification task with two classes, `+` and `-`. The desired prediction is either one of the two classes,  or alternatively answering `don't know`, with the following cost matrix:
+\color{black}
+\begin{center}
+\begin{tabular}{r|c|c|c|}
+ & - & + & don't know \\
+\hline
+- & 0 & 10 & 2 \\
+\hline
++ & 3 & 0 & 1 \\
+\hline
+\end{tabular}
+\end{center}
+\color{blue}
+The goal is to minimize the expected cost (which is also the long-term arverage cost). You are given a classification method that returns a probabilistic prediction, i.e. for each new object the existing method gives you the probability $\alpha$ that the object belongs to class `+` (and hence $1 - \alpha$ is the probability that the object belongs to class `-`).
 
+\noindent Give the optimal policy of answering `+`, `-`, or `don't know` for each object, as a function of the value of $\alpha$. That is, for any given value of $\alpha$ (for $0 \leq \alpha \leq 1$) what is the best answer of the three possibilities?
+\color{black}
 \section*{Problem 2 (3 points)}
 
 \section*{Problem 3 (3 points)}
@@ -125,6 +142,6 @@ Compute and compare the error rates of both classifiers (the prototype-based cla
 \color{black}
 
 \subsection*{Solution to (g)}
-The error rate of the prototype-based classifier is 0.2032 and the error rate of kNN is only 0.852. Obviously, kNN surpasses prototype-based classifier. It seems that 4 and 9, 3 and 8 are problematic. Obviously, the aforementioned digits in each pair share a lot of common geometry.
+The error rate of the prototype-based classifier is 0.2032 and the error rate of kNN is only 0.0852. Obviously, kNN surpasses prototype-based classifier. It seems that 4 and 9, 3 and 8 are problematic. Obviously, the aforementioned digits in each pair share a lot of common geometry.
 
 \end{document}
