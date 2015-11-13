@@ -13,7 +13,7 @@
 \usepackage{tikz}
 \usepackage[colorlinks=true,urlcolor=blue]{hyperref}
 
-\title{Introduction to Machine Learning, Fall 2014 - Exercise session III}
+\title{Introduction to Machine Learning, Fall 2015 - Exercise session III}
 \author{Rodion ``rodde'' Efremov, student ID 013593012}
 
 \begin{document}
@@ -101,7 +101,13 @@ In order to minimize $E\{C\}$, we take the first derivative with respect to $b$,
 \]
 The second derivative with respet to $b$ is 2, which implies that at point $b = a$ $E\{C\}$ is minimized, and so the cost function is indeed proper.
 \section*{Problem 3 (3 points)}
-Omitted.
+\color{blue}
+The figure below shows the class conditional probability densities $p(\mathbf{x} | y)$ where $y$ gives one of 3 different classes $(y = 0, y = 1,$ or $y = 2)$ and $\mathbf{x} \in \mathbb{R}^2$. Each of the class conditionals is a uniform density over the corresponding rectangle. (For example, all vectors $\mathbf{x}$ belonging to class $y = 0$ have attribute values $x_1 \in [1, 4]$ and $x_2 \in [3, 5]$, and these vectors are uniformly distributed within this rectangle.) Additionally we know that the marginal probabilities of the classes are $P(y = 0) = 0.2$, $P(y = 1) = 0.7$, $P(y = 2) = 0.1$. For each of the indicated points $\mathbf{x}_1, \dots, \mathbf{x}_5$ compute the posterior probability distribution over the three classes. (That is, when observing a new vector $\mathbf{x}_i$, what is the probability that it belongs to class $y = 0$, to class $y = 1$, or to class $y = 2$? Remember that these probabilities should sum to one.)
+\color{black}
+\includegraphics[scale=0.5]{rectangles}
+
+\subsection*{Solution}
+The points $\mathbf{x}_1$ and $\mathbf{x}_5$ will be classified with probability 1 to classes $y = 1$ and $y = 2$, respectively. The point $\mathbf{x}_2$ ``behaves`` like the marginal probabilities, so $p(y = 0 | \mathbf{x}_2) = 0.2$, $p(y = 1 | \mathbf{x}_2) = 0.7$, and $p(y = 2 | \mathbf{x}_2) = 0.1$. What comes to $\mathbf{x}_3$ the probability of $p(y = 1 | \mathbf{x}_3) = \frac{0.7}{0.7 + 0.1} = 0.875$ and also $p(y = 2 | \mathbf{x}_3 )= \frac{0.1}{0.7 + 0.1} = 0,125$ ($p(y = 0 | \mathbf{x}_3) = 0$. The last point is $\mathbf{x}_4$ and we have $p(y = 1 | \mathbf{x}_4) = 0$, $p(y = 0 | \mathbf{x}_4) = \frac{0.2}{0.2 + 0.1} = \frac{2}{3}$ and $p(y = 2 | \mathbf{x}_4) = \frac{0.1}{0.2 + 0.1} = \frac{1}{3}$.
 
 \section*{Problem 4 (9 points)}
 \subsection*{(a)}
