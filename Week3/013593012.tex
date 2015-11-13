@@ -74,8 +74,34 @@ P(\alpha) =
 \end{cases}
 \]
 \section*{Problem 2 (3 points)}
+\color{blue}
+In a binary classification task we are trying to classify the objects $\mathbf{x}$ into classes $y = 1$ and $y = 0$. We are here using probabilistic predictions, so for each new object we are required to output our probability $b = P(y = 1 | \mathbf{x})$, with $0 \leq b \leq 1$. We are using the following quadratic cost function:
+\[
+C(y, b) = 
+\begin{cases}
+(b - 1)^2 & \text{if } y = 1 \\
+b^2       & \text{if } y = 0
+\end{cases}
+\]
+Obviously, if the value of $y$ is 1, the lowest cost (0) is obtained when $b = 1$. Similarly, if the value of $y$ is 0, the lowest cost (0) is obtained when $b = 0$, so the cost function seems to encourage appropriate behaviour. In fact, the cost function is \textit{proper}. Show this. (Hint: Assume that the true probability that $y = 1$ is a (so the true probability that $y = 0$ is $1 - a$), and show that the expected cost is minimized for $b = a$.)
+\color{black}
 
+\subsection*{Solution}
+Suppose that $P(y = 1 | \mathbf{x}) = b$ and $P(y = 0 | \mathbf{x}) = 1 - b$. Let the actual probabilities be $P(y = 1|\mathbf{x}) = a$ and $P(y = 0 | \mathbf{x}) = 1 - a$. Now the expected cost is 
+\begin{align*}
+E\{C\} &= aC(1, b) + (1 - a)C(0, b) \\
+       &= a(b - 1)^2 + (1 - a)b^2 \\
+       &= a(b^2 - 2b + 1) + b^2 - ab^2 \\
+       &= ab^2 - 2ab + a + b^2 - ab^2 \\
+       &= b^2 - 2ab + a.
+\end{align*}
+In order to minimize $E\{C\}$, we take the first derivative with respect to $b$, that is
+\[
+2b - 2a = 2(b - a).
+\]
+The second derivative with respet to $b$ is 2, which implies that at point $b = a$ $E\{C\}$ is minimized, and so the cost function is indeed proper.
 \section*{Problem 3 (3 points)}
+Omitted.
 
 \section*{Problem 4 (9 points)}
 \subsection*{(a)}

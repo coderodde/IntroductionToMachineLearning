@@ -118,7 +118,7 @@ def KNN():
     #for y in range(0, len(confusion_matrix)):
     #    print confusion_matrix[y]
 
-    print error_rate(confusion_matrix)
+    #print error_rate(confusion_matrix)
     return confusion_matrix
 
 
@@ -155,7 +155,7 @@ def simple_EC_classifier():
     #for y in range(0, len(confusion_matrix)):
     #    print confusion_matrix[y]
 
-    print error_rate(confusion_matrix)
+    #print error_rate(confusion_matrix)
     return confusion_matrix
 
 #print "*** Prototype classifier ***"
