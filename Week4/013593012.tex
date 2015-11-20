@@ -1,0 +1,107 @@
+\documentclass[10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[ruled,linesnumbered,noend]{algorithm2e}
+\usepackage{empheq}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+\title{Introduction to Machine Learning, Fall 2015 - Exercise session IV}
+\author{Rodion ``rodde'' Efremov, student ID 013593012}
+
+\begin{document}
+ \maketitle
+
+\section*{Problem 1 (3 points)}
+\color{blue}
+Consider the following two sets of 80 cars each: Set 'A' consists of 10 Volvos, 25 Toyotas, and 45 Audis, while set 'B' consists of 8 Volvos, 32 Toyotas, and 40 Audis. Which set do you intuitively think is more pure (that is, has lower impurity), and why? Compute the entropy, the Gini index, and the misclassification error for each of the two sets. According to these measures, which set is more pure? Could this phenomenon (conflict among the measures) happen if there were just two classes (two types of car) rathere than three? Why, or why not?
+\color{black}
+
+\subsection*{Solution}
+It seems like the set 'A' is more pure than 'B', as in the set 'B' we have 32 Toyotas, and 40 Audis. The entropy of A is 
+\begin{align*} 
+&-\frac{10}{80} \log_2 \frac{10}{80} - \frac{25}{80} \log_2 \frac{25}{80} - \frac{45}{80} \log_2 \frac{45}{80} \\
+&= \frac{1}{8} (\log_2 80 - \log_2 10) + \frac{5}{16} (\log_2 80 - \log_2 25) + \frac{9}{16} (\log_2 80 - \log_2 45) \\
+&\approx 0.375 + 0.524 + 0.467 \\
+&\approx 1.367.
+\end{align*}
+The entropy of B is 
+\begin{align*}
+&-\frac{8}{80} \log_2 \frac{8}{80} - \frac{32}{80} \log_2 \frac{32}{80} - \frac{40}{80} \log_2 \frac{40}{80} \\
+&= 0.1 \log_2 10 + 0.25 (\log_2 80 - log_2 32) + 0.5 \log_2 2 \\
+&\approx 0.332 + 0.529 + 0.5 \\
+&\approx 1.361.
+\end{align*}
+
+The Gini index of the set A is
+\begin{align*}
+&1 - \Bigg( \frac{10}{80} \Bigg)^2 - \Bigg( \frac{25}{80} \Bigg)^2 - \Bigg( \frac{45}{80} \Bigg)^2 \\
+&= 1 - (1/8)^2 - (5/16)^2 - (9/16)^2 \\
+&\approx 1 - 0.016 - 0.098 - 0.316 \\
+&\approx 0.570.
+\end{align*}
+The Gini index of the set B is
+\begin{align*}
+&1 - \Bigg( \frac{8}{80} \Bigg)^2 - \Bigg( \frac{32}{80} \Bigg)^2 - \Bigg( \frac{40}{80} \Bigg)^2 \\
+&= 1 - 0.01 - 0.16 - 0.25 \\
+&= 0.58.
+\end{align*}
+
+The classification error of the set A is
+\[
+1 - \frac{45}{80} = 0.4375.
+\]
+
+The classification error of the set B is
+\[
+1 - \frac{40}{80} = 0.5.
+\]
+
+Summarizing:
+\begin{tabular}{|c||c|c|c|}
+\hline
+  & Entropy & Gini index & Classification error \\
+\hline
+A & 1.367 & 0.570 & 0.438 \\
+B & 1.361 & 0.580 & 0.5 \\
+\hline
+\end{tabular}
+It is hard to tell which set is more pure as the impurity measures contradict each other. Suppose a set contains $N$ elements, $M$ of which belong to one category and the other $N - M$ to the other one. Now, all the impurity measures will attain their maximum value at around $M = \frac{N}{2}$, and all measures will be monotonically increasing on $(0, \frac{N}{2})$, and monotonically decreasing on $(\frac{N}{2}, N)$, so improvement in, say, Gini index will lead to improvement in classification error and entropy, and vice versa.
+
+\section*{Problem 2 (3 points)}
+\color{blue}
+Consider a binary classification problem with the following set of attributes and attribute values:
+\begin{itemize}
+\item Air conditioner = $\{$ Working, Broken $\}$
+\item Engine = $\{$ Good, Bad $\}$
+\item Mileage = $\{$ High, Medium, Low $\}$
+\item Rust = $\{$ Yes, No $\}$
+\end{itemize}
+Suppose a rule-based classifier produces the following rule set:
+\begin{itemize}
+\item (Mileage = High) $\Rightarrow$ (Value = Low)
+\item (Mileage = Low) $\Rightarrow$ (Value = High)
+\item ((Air conditioner = Working) and (Engine = Good)) $\Rightarrow$ (Value = High)
+\item ((Air conditioner = Working) and (Engine = Bad)) $\Rightarrow$ (Value = Low)
+\item (Air conditioner = Broken) $\Rightarrow$ (Value = Low)
+\end{itemize}
+Given the above, answer the following:
+\begin{itemize}
+\item[(a)] Is the rule set consistent?
+\item[(b)] Is the rule set complete?
+\item[(c)] Is the meaning of the rule set clear if you consider it as unordered?
+\item[(d)] If you consider this as an ordered rule list, could the meaning be affected if the order is changed?
+\item[(e)] Do you need a default rule?
+\end{itemize}
+\color{black}
+
+\subsection*{Solution}
+
+\end{document}
