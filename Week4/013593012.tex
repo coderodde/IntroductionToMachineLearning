@@ -65,6 +65,7 @@ The classification error of the set B is
 \]
 
 Summarizing:
+\begin{center}
 \begin{tabular}{|c||c|c|c|}
 \hline
   & Entropy & Gini index & Classification error \\
@@ -73,6 +74,7 @@ A & 1.367 & 0.570 & 0.438 \\
 B & 1.361 & 0.580 & 0.5 \\
 \hline
 \end{tabular}
+\end{center}
 It is hard to tell which set is more pure as the impurity measures contradict each other. Suppose a set contains $N$ elements, $M$ of which belong to one category and the other $N - M$ to the other one. Now, all the impurity measures will attain their maximum value at around $M = \frac{N}{2}$, and all measures will be monotonically increasing on $(0, \frac{N}{2})$, and monotonically decreasing on $(\frac{N}{2}, N)$, so improvement in, say, Gini index will lead to improvement in classification error and entropy, and vice versa.
 
 \section*{Problem 2 (3 points)}
@@ -103,5 +105,11 @@ Given the above, answer the following:
 \color{black}
 
 \subsection*{Solution}
-
+\begin{itemize}
+\item[(a)] Yes, it is consistent as all instances are covered only by a single rule.
+\item[(b)] No, it is not as instance involving $\{$ Rust = ... $\}$ is not covered by any rule in the set.
+\item[(c)] Yes, it is.
+\item[(d)] No, the meaning will not change upon permuting the rules.
+\item[(e)] Since instances involving rust are not classified, we need a default rule.
+\end{itemize}
 \end{document}
