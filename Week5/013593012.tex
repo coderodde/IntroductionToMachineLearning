@@ -1,0 +1,96 @@
+\documentclass[10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage[ruled,linesnumbered,noend]{algorithm2e}
+\usepackage{empheq}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+
+\title{Introduction to Machine Learning, Fall 2015 - Exercise session V}
+\author{Rodion ``rodde'' Efremov, student ID 013593012}
+
+\begin{document}
+ \maketitle
+
+\section*{Problem 2 (3 points)}
+\color{blue} \textit{Exclusive or} is a classical example used to demonstrate the limitations of linear classifiers. In the most basic setting, we have two binary inputs and a binary output. Using +1 and -1 as the binary values, the exclusive or function XOR is given by the following table:
+\begin{center}
+\begin{tabular}{|cc|c|}
+$x_1$ & $x_2$ & XOR($x_1, x_2$) \\
+\hline
+-1 & -1 & -1 \\
+-1 & +1 & +1 \\
++1 & -1 & +1 \\
++1 & +1 & -1 \\
+\hline
+\end{tabular}
+\end{center}
+\begin{itemize}
+\item[(a)] Give a detailed proof for the fact that the exclusive or function cannot be represented as a linear classifier. That is, prove that there is no coefficient vector $(w_0, w_1, w_2)$ such that
+\[
+\text{XOR}(x_1, x_2) = \text{sign}(w_0 + w_1 x_1 + w_2 + x_2)
+\]
+whould hold for all possible inputs $(x_1, x_2)$.
+\item[(b)] Show that if we include an extra input variable $x_1x_2$, we can represent XOR as a linear classifier in terms of the modified inputs. That is, find a coefficient vector $(w_0, w_1, w_2, w_3)$ such that
+\[
+\text{XOR}(x_1, x_2) = sign(w_0 + w_1 x_1 + w_2 x_2 + w_3x_1x_2)
+\]
+holds for all $(x_1, x_2)$.
+\end{itemize}
+\color{black}
+
+\subsection*{Solution to (a)}
+Define three points in $\mathbb{R}^3$:
+\begin{description}
+\item[$A$] $(-1, -1, w_0 - w_1 - w_2)$,
+\item[$B$] $(-1, +1, w_0 - w_1 + w_2)$,
+\item[$C$] $(+1, -1, w_0 + w_1 - w_2)$.
+\end{description}
+We must have
+\begin{align*}
+& w_0 - w_1 - w_2 < 0, \\
+& w_0 - w_1 + w_2 > 0, \\
+& w_0 + w_1 - w_2 > 0.
+\end{align*}
+Next, let us find a plane in $\mathbb{R}^3$ that passes through points $A, B$ and $C$: $z = ax + by + c$. Now,
+\[
+\begin{cases}
+-a - b + c &= w_0 - w_1 - w_2 \\
+-a + b + c &= w_0 - w_1 + w_2 \\
+a - b + c  &= w_0 + w_1 - w_2,
+\end{cases}
+\]
+which simplifies to
+\[
+\begin{cases}
+-a - b + c &= w_0 - w_1 - w_2 \\
+2c &= 2w_0,
+\end{cases}
+\]
+so we have that $c = w_0$. Next,
+\[
+\begin{cases}
+-a - b &= -w_1 - w_2 \\
+-a + b & = -w_1 + w_2.
+\end{cases}
+\]
+Which leads to $-2a = -2w_1$ and $a = w_1$, and finally $b = w_2$. Now our plane is defined as
+\[
+z = w_1x + w_2y + w_3.
+\]
+The point $D$ has coordinates $(+1, +1, w_0 + w_1 + w_2)$. Since
+\begin{align*}
+w_0 - w_1 + w_2 &> 0 \\
+w_0 + w_1 - w_2 &> 0, \\
+\end{align*}
+summing the above inequalities we obtain $w_0 > 0$. Also, since $w_0 - w_1 - w_2 < 0$, we have that $w_0 < w_1 + w_2$. So $w_0 + w_1 + w_2 > 0$ and $D$ is ``misclassified'' (we should have had $w_0 + w_1 + w_2 < 0$.). 
+
+If we chose instead of the point $D$, we would get the same contradiction. The problem is that all four points do not lie on a same single plane.
+\end{document}
