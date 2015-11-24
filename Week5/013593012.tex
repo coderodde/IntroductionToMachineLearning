@@ -93,4 +93,19 @@ w_0 + w_1 - w_2 &> 0, \\
 summing the above inequalities we obtain $w_0 > 0$. Also, since $w_0 - w_1 - w_2 < 0$, we have that $w_0 < w_1 + w_2$. So $w_0 + w_1 + w_2 > 0$ and $D$ is ``misclassified'' (we should have had $w_0 + w_1 + w_2 < 0$.). 
 
 If we chose instead of the point $D$, we would get the same contradiction. The problem is that all four points do not lie on a same single plane.
+
+\subsection*{Solution to (b)}
+This one is easy. Just define $\text{XOR}(x_1, x_2) = -\text{sign}(x_1x_2)$. Now
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+$x_1$ & $x_2$ & $\text{XOR}(x_1, x_2)$ \\
+\hline
+-1 & -1 & $-\text{sign}((-1) \times (-1)) = -\text{sign}(1) = -1$ \\
+-1 & +1 & $-\text{sign}((-1) \times (+1)) = -\text{sign}(-1) = 1$ \\
++1 & -1 & $-\text{sign}((+1) \times (-1)) = -\text{sign}(-1) = 1$ \\
++1 & +1 & $-\text{sign}((+1) \times (+1)) = -\text{sign}(1) = -1$ \\
+\hline
+\end{tabular}
+\end{center}
 \end{document}
