@@ -108,4 +108,35 @@ $x_1$ & $x_2$ & $\text{XOR}(x_1, x_2)$ \\
 \hline
 \end{tabular}
 \end{center}
+
+\section*{Problem 3 (3 points)}
+\color{blue}
+\textit{Multilayer neural networks} are another way of using linear classifiers for nonlinear problems. The most basic such classifier, for two-dimensional inputs and with two \textit{hidden units}, has parameters $(u_{ij})$, $i \in \{ 1, 2 \}$, $j \in \{ 0, 1, 2 \}$ and $(v_k)$, $i \in \{ 0, 1, 2 \}$ (that is, a total of 9 parameters), and computes a mapping $(x_1, x_2) \mapsto y$ as follows:
+\begin{align*}
+z_1 &= \text{sign}(u_{10} + u_{11} x_1 + u_{12} x_2) \\
+z_2 &= \text{sign}(u_{20} + u_{21} x_1 + u_{22} x_2) \\
+7 &= \text{sign}(v_0 + v_1 z_1 + v_2 z_2). \\
+\end{align*}
+[The figure omitted.]
+The term ``hidden unit`` refers to the computation of intermediate values $z_i$ that are not as such part of the visible input or output.
+\begin{itemize}
+\item[(a)] Show that with a suitable choice of the weights $(u_{ij})$ and $(v_k)$, the neural network explained aboce can compute the XOR function from Problem 2.
+\item[(b)] There are numerous variants of this basic neural network model. In particular, the signum function used above in computing the values $z_i$ is often replaced by some continuous function, such as the logistic sigmoid $r \mapsto 1/(1 + e^{-r})$. However, one variant that does \textit{not} make sense is just to ignore the signum function for $z_i$ and just compute
+\begin{align*}
+z_1 &= u_{10} + u_{11} x_1 + u_{12} x_2 \\
+z_2 &= u_{20} + u_{21} x_1 + u_{22} x_2 \\
+y   &= \text{sign}(v_0 + v_1 z_1 + v_2 z_2). \\
+\end{align*}
+Show that this model would not offer any advantage over a basic linear classifier $y = \text{sign}(w_0 + w_1 x_1 + w_2 x_2).$
+\end{itemize}
+\color{black}
+
+\subsection*{Solution to (b)}
+We have that 
+\begin{align*}
+y &= \text{sign}(v_0 + v_1 z_1 + v_2 z_2) \\
+  &= \text{sign}(v_0 + v_1 (u_{10} + u_{11}x_1 + u_{12}x_2) + v_2 (u_{20} + u_{21}x_1 + u_{22}x_2)) \\
+  &= \text{sign}(\overbrace{(v_0 + v_1 u_{10} + v_2 u_{20})}^{w_0} + \overbrace{(v_1 u_{11} + v_2 u_{21})}^{w_1} x_1 + \overbrace{(v_1 u_{12} + v_2 u_{22})}^{w_2} x_2),
+\end{align*}
+which is exactly what we had in Problem 2 (a).
 \end{document}
