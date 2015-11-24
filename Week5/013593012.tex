@@ -131,6 +131,33 @@ Show that this model would not offer any advantage over a basic linear classifie
 \end{itemize}
 \color{black}
 
+\subsection*{Solution to (a)}
+If we restrict the values of $v_0, v_1, v_2, u_{10}, u_{11}, u_{12}, u_{20}, u_{21}, u_{22}$ to the set $\{ -1, +1 \}$, there is 16 possible assignments such that the neural network in question computes $\text{XOR}(x_1, x_2)$. One of them is
+\begin{align*}
+v_0 &= -1    \\
+v_1 &= +1     \\
+v_2 &= -1    \\
+u_{10} &= +1  \\
+u_{11} &= -1 \\
+u_{12} &= -1 \\
+u_{20} &= -1 \\
+u_{21} &= -1 \\
+u_{22} &= -1 \\
+\end{align*}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+$x_1$ & $x_2$ & $z_1$ & $z_2$ & $y$ \\
+\hline
+-1 & -1 & +1 & +1 & -1 \\
+-1 & +1 & +1 & -1 & +1 \\
++1 & -1 & +1 & -1 & +1 \\
++1 & +1 & -1 & -1 & -1 \\
+\hline
+\end{tabular}
+\end{center}
+
 \subsection*{Solution to (b)}
 We have that 
 \begin{align*}
