@@ -166,4 +166,17 @@ y &= \text{sign}(v_0 + v_1 z_1 + v_2 z_2) \\
   &= \text{sign}(\overbrace{(v_0 + v_1 u_{10} + v_2 u_{20})}^{w_0} + \overbrace{(v_1 u_{11} + v_2 u_{21})}^{w_1} x_1 + \overbrace{(v_1 u_{12} + v_2 u_{22})}^{w_2} x_2),
 \end{align*}
 which is exactly what we had in Problem 2 (a).
+
+\section*{4 (15 points)}
+What comes to the (a) part, just run the Python script (013593012.py) and it will show the fitting polynomials for $K = 0, 1, \dots, 10$. The figure I got is:
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.7]{CrossValidation}
+\end{center}
+\end{figure}
+It would seem that $K = 4$ would work best, but the best $K$ varies from time to time. After $K = 5$, the error does not really improve and becomes large at $K = 9$. On another run of the program, I got that $K = 3$ is the best with sum of squared errors of $\sim 4.9$ and coefficients something like 
+\[
+(\overbrace{0.006}^{x^3}, \overbrace{-0.520}^{x^2}, \overbrace{0.994}^{x}, 2.019),
+\] 
+which is almost the target polynomial with minor ``corrections''.
 \end{document}
