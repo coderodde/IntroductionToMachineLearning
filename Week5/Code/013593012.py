@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import random
 
 def get_x_coordinates():
     return 6.0 * np.random.random_sample(30) - 3.0
@@ -47,11 +47,48 @@ def process(x_coordinates, k):
     plt.show()
 
 
-def main():
+def task_a():
     x_coordinates = get_x_coordinates()
 
     for k in range(0, 11):
         process(x_coordinates, k)
+
+
+def cross_validate(x_coord_chunks, skip_chunk_id, k):
+    x_coords = []
+
+    for i in range(0, 10):
+        if i != skip_chunk_id:
+            x_coords.extend(x_coord_chunks[i])
+
+    space = np.linspace(-3.0, 3.0, 1000)
+    y_coords = get_y_coordinates(x_coords)
+    p = np.polyfit(x_coords, y_coords, k)
+    return det_coef(y_coords, np.polyval(p, x_coords))
+
+
+def task_b():
+    x_coords = get_x_coordinates()
+    random.shuffle(x_coords)
+    x_coord_chunks = []
+
+    for i in range(0, len(x_coords), 3):
+        chunk = []
+
+        for j in range(i, i + 3):
+            chunk.append(x_coords[j])
+
+        x_coord_chunks.append(chunk)
+
+    for k in range(0, 11):
+        for skip_chunk_id in range(0, 10):
+            coef = cross_validate(x_coord_chunks, skip_chunk_id, k)
+            print("K = ", str(k), ", R = ", coef)
+
+
+def main():
+    # task_a()
+    task_b()
 
 
 if __name__ == "__main__":
