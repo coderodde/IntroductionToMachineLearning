@@ -72,7 +72,7 @@ def cross_validate(x_coord_chunks, skip_chunk_id, k):
 
     for i in range(0, 3):
         err += (y_target_coords[i] - np.polyval(p, x_target_coords[i])) ** 2
-    print("fds")
+
     return err
 
 
@@ -89,10 +89,20 @@ def task_b():
 
         x_coord_chunks.append(chunk)
 
+    error_array = []
+
     for k in range(0, 11):
+        sum_of_squared_erros = 0
+
         for skip_chunk_id in range(0, 10):
             error = cross_validate(x_coord_chunks, skip_chunk_id, k)
-            print "K = " + str(k) + ", j = " + str(skip_chunk_id) + ", squared error = " + str(error)
+            sum_of_squared_erros += error
+
+        error_array.append(sum_of_squared_erros)
+        print "K = " + str(k) + ", error sum = " + str(error)
+
+    plt.plot(error_array)
+    plt.show()
 
 
 def main():
