@@ -97,7 +97,6 @@ def task_b():
         for skip_chunk_id in range(0, 10):
             error, p = cross_validate(x_coord_chunks, skip_chunk_id, k)
             sum_of_squared_error += error
-            print(p)
 
         error_array.append(sum_of_squared_error)
         print "K = " + str(k) + ", error sum = " + str(sum_of_squared_error)
@@ -110,7 +109,7 @@ def task_b():
 
 
 def main():
-    #task_a()
+    task_a()
     task_b()
 
 

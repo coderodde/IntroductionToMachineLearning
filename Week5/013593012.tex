@@ -83,7 +83,7 @@ so we have that $c = w_0$. Next,
 \]
 Which leads to $-2a = -2w_1$ and $a = w_1$, and finally $b = w_2$. Now our plane is defined as
 \[
-z = w_1x + w_2y + w_3.
+z = w_1x + w_2y + w_0.
 \]
 The point $D$ has coordinates $(+1, +1, w_0 + w_1 + w_2)$. Since
 \begin{align*}
@@ -92,7 +92,7 @@ w_0 + w_1 - w_2 &> 0, \\
 \end{align*}
 summing the above inequalities we obtain $w_0 > 0$. Also, since $w_0 - w_1 - w_2 < 0$, we have that $w_0 < w_1 + w_2$. So $w_0 + w_1 + w_2 > 0$ and $D$ is ``misclassified'' (we should have had $w_0 + w_1 + w_2 < 0$.). 
 
-If we chose instead of the point $D$, we would get the same contradiction. The problem is that all four points do not lie on a same single plane.
+If we chose instead of the point $D$ another point, we would get the same contradiction. The problem is that all four points do not lie on a same single plane, and this model is linear, which implies that there is no such ``desicion plane'' that could handle all four cases.
 
 \subsection*{Solution to (b)}
 This one is easy. Just define $\text{XOR}(x_1, x_2) = -\text{sign}(x_1x_2)$. Now
@@ -169,7 +169,7 @@ which is exactly what we had in Problem 2 (a).
 
 \section*{4 (15 points)}
 What comes to the (a) part, just run the Python script (013593012.py) and it will show the fitting polynomials for $K = 0, 1, \dots, 10$. The figure I got is:
-\begin{figure}
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.7]{CrossValidation}
 \end{center}
@@ -178,5 +178,5 @@ It would seem that $K = 4$ would work best, but the best $K$ varies from time to
 \[
 (\overbrace{0.006}^{x^3}, \overbrace{-0.520}^{x^2}, \overbrace{0.994}^{x}, 2.019),
 \] 
-which is almost the target polynomial with minor ``corrections''.
+which is almost the target polynomial with minor ``corrections''. (\textbf{Note}: I have excluded the printing of the actual coefficients for the task (b), as there is too much of it.)
 \end{document}
