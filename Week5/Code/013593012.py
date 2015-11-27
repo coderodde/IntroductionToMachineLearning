@@ -24,7 +24,10 @@ def get_y_coordinates(x_coordinates):
 
 def main():
     x_coordinates = get_x_coordinates()
+    p = np.polyfit(x_coordinates, get_y_coordinates(x_coordinates), 10)
+    v = np.polyval(p, np.linspace(-3.0, 3.0, 1000))
     plt.plot(x_coordinates, f(x_coordinates), 'ro')
+    plt.plot(np.linspace(-3.0, 3.0, 1000), v)
     plt.axis([-3, 3, -6, 3])
     plt.show()
 
