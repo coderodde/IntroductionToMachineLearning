@@ -50,21 +50,30 @@ def process(x_coordinates, k):
 def task_a():
     x_coordinates = get_x_coordinates()
 
-    for k in range(0, 11):
+    for k in range(0, 10):
         process(x_coordinates, k)
 
 
 def cross_validate(x_coord_chunks, skip_chunk_id, k):
     x_coords = []
+    x_target_coords = []
 
     for i in range(0, 10):
         if i != skip_chunk_id:
             x_coords.extend(x_coord_chunks[i])
+        else:
+            x_target_coords.extend(x_coord_chunks[i])
 
-    space = np.linspace(-3.0, 3.0, 1000)
     y_coords = get_y_coordinates(x_coords)
     p = np.polyfit(x_coords, y_coords, k)
-    return det_coef(y_coords, np.polyval(p, x_coords))
+    y_target_coords = get_y_coordinates(x_target_coords)
+
+    err = 0
+
+    for i in range(0, 3):
+        err += (y_target_coords[i] - np.polyval(p, x_target_coords[i])) ** 2
+
+    return err
 
 
 def task_b():
@@ -82,12 +91,12 @@ def task_b():
 
     for k in range(0, 11):
         for skip_chunk_id in range(0, 10):
-            coef = cross_validate(x_coord_chunks, skip_chunk_id, k)
-            print("K = ", str(k), ", R = ", coef)
+            error = cross_validate(x_coord_chunks, skip_chunk_id, k)
+            print "K = " + str(k) + ", j = " + str(skip_chunk_id) + ", squared error = " + str(error)
 
 
 def main():
-    # task_a()
+    #task_a()
     task_b()
 
 
