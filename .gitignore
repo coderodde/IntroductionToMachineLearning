@@ -6,3 +6,7 @@ movielens
 *.out
 *.synctex.gz
 *ubyte
+*.txt
+*.m
+*.R
+mnist_load_show.*
