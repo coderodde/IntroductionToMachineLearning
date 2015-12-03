@@ -32,12 +32,23 @@ def one_vs_all():
     # w_classes is an array of length 10 holding the w-vector for each class.
     # The ith vector corresponds to the class 'i'.
     w_classes = [np.array([0 for i in range(len(XTrain[0]))]) for cls in range(10)]
+    best_scores = [0 for cls in range(10)]
 
     for i in range(len(XTrain)):
         X = XTrain[i]
         y = yTrain[i]
-        y_classified = np.dot(w_classes[y], X)
-        if y_classified <= 0:
+
+        best_class = 0
+        best_cost  = np.dot(w_classes[0], X)
+
+        for cls in range(1, 10):
+            current_cost = np.dot(w_classes[cls], X)
+            if best_cost < current_cost:
+                best_cost = current_cost
+                best_class = cls
+
+        if best_class != y:
+            w_classes[best_class] -= X
             w_classes[y] += X
 
     #### CLASSIFY ####
@@ -66,14 +77,19 @@ def one_vs_all():
 
 matrix = one_vs_all()
 
-print(matrix)
+for i in range(len(matrix)):
+    print(matrix[i])
 
+sum = 0
+
+for i in range(len(matrix)):
+    sum += matrix[i][i]
+
+print("Correct:", sum)
 
 def all_vs_all():
     all_vs_all_conf_matrix = ''
     return all_vs_all_conf_matrix
-
-
 
 
 def main():
