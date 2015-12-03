@@ -25,16 +25,25 @@ yTest  = y[30000:60000]
 def my_info():
     return student_ID
 
+def copy(source, target):
+    for y in range(len(source)):
+        for x in range(len(source[y])):
+            target[y][x] = source[y][x]
+
 
 def one_vs_all():
     #### LEARN ####
     # w_classes is an array of length 10 holding the w-vector for each class.
     # The ith vector corresponds to the class 'i'.
     w_classes = [np.array([0 for i in range(len(XTrain[0]))]) for cls in range(10)]
-    w_classes_pockets = [np.array([0 for i in range(len(XTrain[0]))]) for cls in range(10)]
+    pocket_w_classes = [np.array([0 for i in range(len(XTrain[0]))]) for cls in range(10)]
+    pocket_score = 0
+    pocket_changed = True
 
+    while pocket_changed:
+        score = 0
+        pocket_changed = False
 
-    for i in range(1):
         for i in range(len(XTrain)):
             X = XTrain[i]
             actual_class = yTrain[i]
@@ -52,6 +61,15 @@ def one_vs_all():
                 w_classes[best_class] -= X
                 w_classes[actual_class] += X
 
+                if score > pocket_score:
+                    pocket_score = score
+                    copy(w_classes, pocket_w_classes)
+                    pocket_changed = True
+
+                score = 0
+            else:
+                score += 1
+
     #### CLASSIFY ####
     # Create confusion matrix:
     confusion_matrix = [[0 for i in range(10)] for i in range(10)]
@@ -66,7 +84,7 @@ def one_vs_all():
 
         # Try against each class:
         for cls in range(10):
-            score = np.dot(w_classes[cls], X)
+            score = np.dot(pocket_w_classes[cls], X)
             if best_score < score:
                 best_score = score
                 best_class = cls
@@ -97,10 +115,17 @@ def main():
     """
     DO NOT TOUCH THIS FUNCTION. IT IS USED FOR COMPUTER EVALUATION OF YOUR CODE
     """
+    conf_matrix1 = one_vs_all()
+    conf_matrix2 = all_vs_all()
     results = my_info() + '\t\t'
-    results += np.array_str(np.diagonal(one_vs_all())) + '\t\t'
-    results += np.array_str(np.diagonal(all_vs_all()))
+    results += np.array_str(np.diagonal(conf_matrix1)) + '\t\t'
+    results += np.array_str(np.diagonal(conf_matrix2))
     print results + '\t\t'
+    sum = 0
+    for i in range(10):
+        sum += conf_matrix1[i][i]
+    print "Sum:", sum
+
 
 
 
