@@ -36,10 +36,9 @@ def one_vs_all():
     for i in range(len(XTrain)):
         X = XTrain[i]
         y = yTrain[i]
-        y_classified = np.sign(np.dot(w_classes[y], X))
-
-        if y_classified != 1:
-            w_classes[y] += y * X
+        y_classified = np.dot(w_classes[y], X)
+        if y_classified <= 0:
+            w_classes[y] += X
 
     #### CLASSIFY ####
     # Create confusion matrix:
@@ -61,12 +60,13 @@ def one_vs_all():
                 best_class = cls
 
         # Update confusion matrix:
-        confusion_matrix[y][best_class] += 1
+        confusion_matrix[best_class][y] += 1
     # Done iterating over the test data.
-    one_vs_all_conf_matrix = []
-    return one_vs_all_conf_matrix
+    return confusion_matrix
 
-one_vs_all()
+matrix = one_vs_all()
+
+print(matrix)
 
 
 def all_vs_all():
