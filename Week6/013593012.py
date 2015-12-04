@@ -95,8 +95,10 @@ def one_vs_all():
     return confusion_matrix
 
 
-def copy_all():
-    pass
+def copy_all(source, target):
+    for y in range(len(source)):
+        for x in range(len(source[y])):
+            target[y][x] = np.copy(source[y][x])
 
 
 def all_vs_all():
@@ -106,7 +108,7 @@ def all_vs_all():
     pocket_changed = True
 
     # LEARN
-    for epoch in range(1):
+    while pocket_changed:
         score = 0
         pocket_changed = False
 
@@ -125,6 +127,15 @@ def all_vs_all():
                     w_class_matrix[actual_class][cls] += X
                     w_class_matrix[cls][actual_class] -= X
 
+                    if score > pocket_score:
+                        pocket_score = score
+                        copy_all(w_class_matrix, pocket_w_class_matrix)
+                        pocket_changed = True
+
+                    score = 0
+                else:
+                    score += 1
+
     confusion_matrix = [[0 for i in range(10)] for j in range(10)]
 
     # CLASSIFY
@@ -140,7 +151,7 @@ def all_vs_all():
                 if cls2 == cls:
                     continue
 
-                cost += np.sign(np.dot(X, w_class_matrix[cls][cls2]))
+                cost += np.sign(np.dot(X, pocket_w_class_matrix[cls][cls2]))
 
             if best_cost < cost:
                 best_cost = cost
@@ -161,16 +172,11 @@ def main():
     results += np.array_str(np.diagonal(conf_matrix1)) + '\t\t'
     results += np.array_str(np.diagonal(conf_matrix2))
     print results + '\t\t'
-    sum = 0
-    for i in range(10):
-        sum += conf_matrix1[i][i]
-    print "Sum:", sum
-    sum = 0
-    for i in range(10):
-        sum += conf_matrix2[i][i]
-    print "Sum2: ", sum
 
-
+    print("onevsall")
+    print(conf_matrix1)
+    print("allvsall")
+    print(conf_matrix2)
 
 if __name__ == '__main__':
     main()
