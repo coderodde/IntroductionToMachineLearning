@@ -94,21 +94,61 @@ def one_vs_all():
     # Done iterating over the test data.
     return confusion_matrix
 
-#matrix = one_vs_all()
 
-#for i in range(len(matrix)):
-#    print(matrix[i])
+def copy_all():
+    pass
 
-#sum = 0
-
-#for i in range(len(matrix)):
-#    sum += matrix[i][i]
-
-#print("Correct", sum)
 
 def all_vs_all():
-    all_vs_all_conf_matrix = [[1 for i in range(10)] for j in range(10)]
-    return all_vs_all_conf_matrix
+    w_class_matrix = [[np.array([0 for i in range(len(XTrain[0]))]) for i in range(10)] for i in range(10)]
+    pocket_w_class_matrix = [[np.array([0 for i in range(len(XTrain[0]))]) for i in range(10)] for i in range(10)]
+    pocket_score = 0
+    pocket_changed = True
+
+    # LEARN
+    for epoch in range(1):
+        score = 0
+        pocket_changed = False
+
+        for i in range(len(XTrain)):
+            X = XTrain[i]
+            actual_class = yTrain[i]
+
+            # Train against all other classes
+            for cls in range(10):
+                if cls == actual_class:
+                    continue
+
+                cost = np.dot(w_class_matrix[actual_class][cls], X)
+
+                if (cost <= 0):
+                    w_class_matrix[actual_class][cls] += X
+                    w_class_matrix[cls][actual_class] -= X
+
+    confusion_matrix = [[0 for i in range(10)] for j in range(10)]
+
+    # CLASSIFY
+    for i in range(len(XTest)):
+        X = XTest[i]
+        actual_class = yTest[i]
+        best_cost = 0
+        best_class = -1
+        # Try against all classes.
+        for cls in range(10):
+            cost = 0
+            for cls2 in range(10):
+                if cls2 == cls:
+                    continue
+
+                cost += np.sign(np.dot(X, w_class_matrix[cls][cls2]))
+
+            if best_cost < cost:
+                best_cost = cost
+                best_class = cls
+
+        confusion_matrix[actual_class][best_class] += 1
+
+    return confusion_matrix
 
 
 def main():
@@ -125,7 +165,10 @@ def main():
     for i in range(10):
         sum += conf_matrix1[i][i]
     print "Sum:", sum
-
+    sum = 0
+    for i in range(10):
+        sum += conf_matrix2[i][i]
+    print "Sum2: ", sum
 
 
 
