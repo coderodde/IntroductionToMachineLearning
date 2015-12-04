@@ -162,6 +162,16 @@ def all_vs_all():
     return confusion_matrix
 
 
+def print_latex_table(matrix):
+    row_num = 0
+    for row in matrix:
+        print row_num,
+        row_num += 1
+        for i in range(len(row)):
+            print " & ", row[i],
+        print ""
+
+
 def main():
     """
     DO NOT TOUCH THIS FUNCTION. IT IS USED FOR COMPUTER EVALUATION OF YOUR CODE
@@ -173,10 +183,25 @@ def main():
     results += np.array_str(np.diagonal(conf_matrix2))
     print results + '\t\t'
 
-    print("onevsall")
-    print(conf_matrix1)
-    print("allvsall")
-    print(conf_matrix2)
+    sum = 0
+
+    for i in  range(len(conf_matrix1)):
+        sum += conf_matrix1[i][i]
+        
+    print "One-vs-All corecct classifications: ", sum
+
+    sum = 0
+
+    for i in range(len(conf_matrix2)):
+        sum += conf_matrix2[i][i]
+
+    print "All-vs-All correct classificatinos: ", sum
+
+    #print("onevsall")
+    #print_latex_table(conf_matrix1)
+    #print("allvsall")
+    #print_latex_table(conf_matrix2)
+
 
 if __name__ == '__main__':
     main()

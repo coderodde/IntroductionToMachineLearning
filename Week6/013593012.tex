@@ -70,4 +70,42 @@ If $N$ is even, the strongest bound for $x$ is $[y_{N / 2}, y_{N / 2 + 1}]$. We 
 x = \frac{y_{N / 2} + y_{N / 2 + 1}}{2},
 \]
 which is, in fact, the median of $(y_i)_{i = 1}^N$. However, if $N$ is odd, we must satisfy $x \in [y_{(N + 1) / 2}, y_{(N + 1) / 2}]$, which is satisfied only if $x = y_{(N + 1) / 2}$, which is a median once again.
+
+\section*{Problem 3 (15 Points)}
+The confusion matrix for one-versus-all Perceptron:
+\begin{center}
+\begin{tabular}{l|l|l|l|l|l|l|l|l|l|l|}
+   & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+   \hline
+0  & 2796 &  0  &  9  &  27  &  7  &  51  &  23  &  33  &  21  &  20 \\
+1  & 0    &  3196  &  52  &  17  &  24  &  35  &  12  &  56  &  106  &  25 \\ 
+2  & 21   &  15  &  2643  &  209  &  14  &  32  &  45  &  160  &  151  &  24 \\
+3  & 2    &  29  &  38  &  2340  &  3  &  104  &  1  &  44  &  58  &  29 \\
+4  & 16   &  1  &  52  &  14  &  2592  &  31  &  119  &  91  &  33  &  207 \\
+5  & 47   &  27  &  17  &  275  &  8  &  2205  &  31  &  14  &  192  &  35 \\
+6  & 32   &  5  &  80  &  20  &  30  &  56  &  2681  &  0  &  7  &  2 \\
+7  & 1    &  5  &  13  &  9  &  3  &  3  &  0  &  2443  &  1  &  28 \\
+8  & 46   &  36  &  91  &  71  &  29  &  169  &  30  &  35  &  2348  &  88 \\ 
+9  & 1    &  5  &  15  &  76  &  206  &  26  &  1  &  282  &  59  &  2488 \\
+\end{tabular}
+\end{center}
+The confusion matrix for all-versus-all Perceptron:
+\begin{center}
+\begin{tabular}{l|l|l|l|l|l|l|l|l|l|l|}
+ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+\hline
+0  &  2906  &  0  &  5  &  6  &  8  &  9  &  11  &  2  &  10  &  5  \\
+1  &  1  &  3235  &  23  &  4  &  6  &  16  &  4  &  4  &  19  &  7 \\
+2  &  42  &  37  &  2773  &  23  &  35  &  11  &  30  &  30  &  17  &  12 \\
+3  &  24  &  18  &  110  &  2695  &  4  &  97  &  9  &  12  &  72  &  17 \\
+4  &  11  &  11  &  12  &  1  &  2726  &  13  &  17  &  5  &  5  &  115 \\
+5  &  68  &  38  &  38  &  198  &  35  &  2110  &  46  &  1  &  168  &  10 \\ 
+6  &  52  &  9  &  67  &  1  &  49  &  29  &  2723  &  0  &  13  &  0 \\
+7  &  19  &  27  &  57  &  47  &  56  &  24  &  0  &  2791  &  5  &  132 \\ 
+8  &  36  &  80  &  108  &  67  &  53  &  71  &  19  &  3  &  2461  &  78 \\
+9  &  18  &  19  &  4  &  51  &  167  &  28  &  0  &  51  &  16  &  2592 \\
+\end{tabular}
+\end{center}
+
+The one-vs-all got 25732 (86\%) correct classifications and all-vs-all got 27012 (90\%) corect classifications. As far as recall the accuracy is comparable to prototype based classifier if not better. No, I do not see anything fancy in the confusion matrices except that some mismatches have larger frequency due to the same digit geometry.
 \end{document}
