@@ -46,11 +46,28 @@ def kmeans(data_matrix, initial_cluster_means):
 
 def main():
     Xin = X[0:500]
-    assignment, cluster_means1 = kmeans(Xin, X[0:10])
+    assignment1, cluster_means1 = kmeans(Xin, X[0:10])
 
-    for i in range(30, 40):
-        print "Predicted: ", assignment[i], ", actual: ", y[i]
+    for mean in cluster_means1:
+        mnist.visualize(mean)
 
+    distinct_means = X[0:10].copy()
+    digit_set = set()
+
+    for i in range(len(Xin)):
+        digit = y[i]
+
+        if digit not in digit_set:
+            digit_set.add(digit)
+            distinct_means[digit] = Xin[i]
+
+            if len(digit_set) == 10:
+                break
+
+    assignment2, cluster_means2 = kmeans(Xin, distinct_means)
+
+    for mean in cluster_means2:
+        mnist.visualize(mean)
 
 if __name__ == "__main__":
     main()
