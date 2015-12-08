@@ -7,10 +7,8 @@ X, y = mnist.read_mnist_training_data()
 def kmeans(data_matrix, initial_cluster_means):
     assignment = dict()
     cluster_means = initial_cluster_means.copy()
-    ff = 0
+
     while True:
-        ff += 1
-        print ff
         # Assign the new vector to a cluster
         for i in range(len(data_matrix)):
             best_cluster_id = -1
@@ -43,16 +41,15 @@ def kmeans(data_matrix, initial_cluster_means):
 
         cluster_means = new_cluster_means
 
-    return cluster_means, assignment
+    return assignment, cluster_means
 
 
 def main():
     Xin = X[0:500]
-    assignment1, cluster_means1 = kmeans(Xin, X[0:10])
+    assignment, cluster_means1 = kmeans(Xin, X[0:10])
 
     for i in range(30, 40):
-        print(assignment1[i])
-        print(y[i])
+        print "Predicted: ", assignment[i], ", actual: ", y[i]
 
 
 if __name__ == "__main__":
