@@ -3,7 +3,6 @@ import mnist_load_show as mnist
 X, y = mnist.read_mnist_training_data()
 
 import numpy as np
-import mnist_load_show as mnist
 """
 ============================================
 DO NOT FORGET TO INCLUDE YOUR STUDENT ID
@@ -183,19 +182,19 @@ def main():
     results += np.array_str(np.diagonal(conf_matrix2))
     print results + '\t\t'
 
-    sum = 0
-
-    for i in  range(len(conf_matrix1)):
-        sum += conf_matrix1[i][i]
-        
-    print "One-vs-All corecct classifications: ", sum
-
-    sum = 0
-
-    for i in range(len(conf_matrix2)):
-        sum += conf_matrix2[i][i]
-
-    print "All-vs-All correct classificatinos: ", sum
+    # sum = 0
+    #
+    # for i in  range(len(conf_matrix1)):
+    #     sum += conf_matrix1[i][i]
+    #
+    # print "One-vs-All corecct classifications: ", sum
+    #
+    # sum = 0
+    #
+    # for i in range(len(conf_matrix2)):
+    #     sum += conf_matrix2[i][i]
+    #
+    # print "All-vs-All correct classificatinos: ", sum
 
     #print("onevsall")
     #print_latex_table(conf_matrix1)
