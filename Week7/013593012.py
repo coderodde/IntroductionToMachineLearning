@@ -120,6 +120,18 @@ def compute_dissimilarity_matrix(data_matrix):
     return dissimilarity_matrix
 
 
+def visualize_digits(assignment, data_matrix):
+    groups = [[] for i in range(10)]
+
+    for i in range(len(data_matrix)):
+        digit = assignment[i]
+        groups[digit].append(data_matrix[i])
+
+    for digit in range(len(groups)):
+        print "Printing for digit", digit
+        mnist.visualize(np.array(groups[digit]))
+
+
 def main():
     print "=== k-means ==="
 
@@ -127,7 +139,14 @@ def main():
     assignment1, cluster_means1 = kmeans(Xin, X[0:10])
 
     print "= First iteration"
+    print "Cluster means"
     mnist.visualize(cluster_means1)
+
+    print "Clusters"
+
+    visualize_digits(assignment1, Xin)
+
+    exit()
 
     print "= Second iteration"
 
