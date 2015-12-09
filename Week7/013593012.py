@@ -44,37 +44,53 @@ def kmeans(data_matrix, initial_cluster_means):
     return assignment, cluster_means
 
 
-def update_medoid(cluster):
-    best_sum = 1000000000.0
-    best_datum = None
+# def update_medoid(cluster):
+#     best_sum = 1000000000.0
+#     best_datum = None
+#
+#     for datum in cluster:
+#         sum1 = 0.0
+#
+#         for datum2 in cluster:
+#             sum1 += np.linalg.norm(datum - datum2)
+#
+#         if best_sum > sum1:
+#             best_sum = sum1
+#             best_datum = datum
+#
+#     return best_datum
 
-    for datum in cluster:
-        sum1 = 0.0
+def update_medoids(dissimilarity_matrix, indices):
+    best_cost = 1.0e9
+    best_index = -1
 
-        for datum2 in cluster:
-            sum1 += np.linalg.norm(datum - datum2)
+    cost = 0.0
+    for current_index in indices:
+        for other_index in indices:
+            cost += dissimilarity_matrix[current_index][other_index]
 
-        if best_sum > sum1:
-            best_sum = sum1
-            best_datum = datum
+        if best_cost > cost:
+            best_cost = cost
+            best_index = current_index
 
-    return best_datum
+    return best_index
 
 
-def kmedoids(data_matrix, initial_cluster_means):
+def kmedoids(dissimilarity_matrix, initial_cluster_means):
     assignment = dict()
-    cluster_means = initial_cluster_means.copy()
+    cluster_medoids = initial_cluster_means.copy()
     ff = 0
     while True:
         ff += 1
-        #print ff
+        print ff
+
         # Assign the new vector to a cluster
-        for i in range(len(data_matrix)):
+        for i in range(500):
             best_cluster_id = -1
             best_distance = 1000000000.0
 
             for k in range(10):
-                dist = np.linalg.norm(data_matrix[i] - cluster_means[k])
+                dist = np.linalg.norm(X[i] - cluster_medoids[k])
                 dist *= dist # squared Euclidean distance
 
                 if best_distance > dist:
@@ -84,33 +100,55 @@ def kmedoids(data_matrix, initial_cluster_means):
             assignment[i] = best_cluster_id
 
         # Update the cluster medoids
-        new_cluster_means = np.zeros([10, len(initial_cluster_means[0])])
+        new_cluster_medoids = np.zeros([10, len(initial_cluster_means[0])])
 
-        # For each medoid:
-        for k in range(10):
-            # Compute 'cluster':
-            cluster = []
+        # Try update the medoids
+        # First, map each digit to the list of matrix indices
+        digit_to_matrix_indices = dict()
+        for i in range(500):
+            if y[i] not in digit_to_matrix_indices:
+                digit_to_matrix_indices[y[i]] = []
 
-            for i in range(len(data_matrix)):
-                if assignment[i] == k:
-                    cluster.append(data_matrix[i])
+            digit_to_matrix_indices[y[i]].append(i)
 
-            new_cluster_means[k] = update_medoid(cluster)
+        for digit in digit_to_matrix_indices.keys():
+            matrix_indices = digit_to_matrix_indices[digit]
+            best_index = update_medoids(dissimilarity_matrix, matrix_indices)
+            new_cluster_medoids[digit] = X[best_index]
 
-        if np.array_equal(new_cluster_means, cluster_means):
+            pass
+
+        if np.array_equal(new_cluster_medoids, cluster_medoids):
             break
 
-        cluster_means = new_cluster_means
+        cluster_medoids = new_cluster_medoids
 
-    return assignment, cluster_means
+    return assignment, cluster_medoids
+
+
+def compute_dissimilarity_matrix(data_matrix):
+    n = len(data_matrix)
+    dissimilarity_matrix = [[0 for i in range(n)] for j in range(n)]
+
+    for y in range(n):
+        for x in range(y + 1, n):
+            dist = np.linalg.norm(data_matrix[y] - data_matrix[x])
+            dissimilarity_matrix[y][x] = dist
+            dissimilarity_matrix[x][y] = dist
+
+    return dissimilarity_matrix
 
 
 def main():
     Xin = X[0:500]
-    assignment1, cluster_means1 = kmedoids(Xin, X[0:10])
+    dissimilarity_matrix = compute_dissimilarity_matrix(Xin)
+
+    assignment1, cluster_means1 = kmedoids(dissimilarity_matrix, X[0:10])
 
     for mean in cluster_means1:
         mnist.visualize(mean)
+
+    print "Done with phase 1."
 
     distinct_means = X[0:10].copy()
     digit_set = set()
@@ -125,7 +163,7 @@ def main():
             if len(digit_set) == 10:
                 break
 
-    assignment2, cluster_means2 = kmedoids(Xin, distinct_means)
+    assignment2, cluster_means2 = kmedoids(dissimilarity_matrix, distinct_means)
 
     for mean in cluster_means2:
         mnist.visualize(mean)
