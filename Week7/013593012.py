@@ -133,20 +133,19 @@ def visualize_digits(assignment, data_matrix):
 
 
 def main():
-    print "=== k-means ==="
-
     Xin = X[0:500]
-    assignment1, cluster_means1 = kmeans(Xin, X[0:10])
 
-    print "= First iteration"
-    print "Cluster means"
-    mnist.visualize(cluster_means1)
-
-    print "Clusters"
-
-    visualize_digits(assignment1, Xin)
-
-    exit()
+    # print "=== k-means ==="
+    #
+    # assignment1, cluster_means1 = kmeans(Xin, X[0:10])
+    #
+    # print "= First iteration"
+    # print "Cluster means"
+    # mnist.visualize(cluster_means1)
+    #
+    # print "Clusters"
+    #
+    # visualize_digits(assignment1, Xin)
 
     print "= Second iteration"
 
@@ -164,7 +163,13 @@ def main():
                 break
 
     assignment1, cluster_means1 = kmeans(Xin, distinct_means)
+    print "Cluster means"
     mnist.visualize(cluster_means1)
+
+    print "Clusters"
+    visualize_digits(assignment1, Xin)
+
+    exit()
 
     print "=== k-medoids ==="
     print "= First iteration"
