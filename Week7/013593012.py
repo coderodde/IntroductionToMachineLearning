@@ -147,8 +147,8 @@ def main():
     #
     # visualize_digits(assignment1, Xin)
 
-    print "= Second iteration"
-
+    # print "= Second iteration"
+    #
     distinct_means = X[0:10].copy()
     digit_set = set()
 
@@ -162,25 +162,37 @@ def main():
             if len(digit_set) == 10:
                 break
 
-    assignment1, cluster_means1 = kmeans(Xin, distinct_means)
-    print "Cluster means"
-    mnist.visualize(cluster_means1)
+    print digit_set
 
-    print "Clusters"
-    visualize_digits(assignment1, Xin)
-
-    exit()
+    # assignment1, cluster_means1 = kmeans(Xin, distinct_means)
+    # print "Cluster means"
+    # mnist.visualize(cluster_means1)
+    #
+    # print "Clusters"
+    # visualize_digits(assignment1, Xin)
+    #
+    # exit()
+    #
 
     print "=== k-medoids ==="
-    print "= First iteration"
     dissimilarity_matrix = compute_dissimilarity_matrix(Xin)
-    assignment1, cluster_medoids1 = kmedoids(dissimilarity_matrix, X[0:10])
+
+    print "= First iteration"
+    assignment2, cluster_medoids1 = kmedoids(dissimilarity_matrix, X[0:10])
+    print "Cluster medoids"
     mnist.visualize(cluster_medoids1)
+
+    print "Clusters"
+    visualize_digits(assignment2, Xin)
 
     print "= Second iteration"
 
     assignment2, cluster_medoids1 = kmedoids(dissimilarity_matrix, distinct_means)
+    print "Cluster medoids"
     mnist.visualize(cluster_medoids1)
+
+    print "Clusters"
+    visualize_digits(assignment2, Xin)
 
 
 if __name__ == "__main__":
