@@ -63,11 +63,8 @@ def update_medoids(dissimilarity_matrix, indices):
 def kmedoids(dissimilarity_matrix, initial_cluster_means):
     assignment = dict()
     cluster_medoids = initial_cluster_means.copy()
-    ff = 0
-    while True:
-        ff += 1
-        print ff
 
+    while True:
         # Assign the new vector to a cluster
         for i in range(500):
             best_cluster_id = -1
@@ -129,12 +126,13 @@ def main():
     Xin = X[0:500]
     assignment1, cluster_means1 = kmeans(Xin, X[0:10])
 
-    print "= First iteration = "
+    print "= First iteration"
 
-    for mean in cluster_means1:
-        mnist.visualize(mean)
+    for digit in range(10):
+        print "Digit", digit
+        mnist.visualize(cluster_means1[digit])
 
-    print "= Second iteration ="
+    print "= Second iteration"
 
     distinct_means = X[0:10].copy()
     digit_set = set()
@@ -151,37 +149,27 @@ def main():
 
     assignment1, cluster_means1 = kmeans(Xin, distinct_means)
 
-    for mean in cluster_means1:
-        mnist.visualize(mean)
+    for digit in range(10):
+        print "Digit", digit
+        mnist.visualize(cluster_means1[digit])
 
     print "=== k-medoids ==="
-    print "= First iteration ="
+    print "= First iteration"
     dissimilarity_matrix = compute_dissimilarity_matrix(Xin)
 
     assignment1, cluster_medoids1 = kmedoids(dissimilarity_matrix, X[0:10])
 
-    for mean in cluster_means1:
-        mnist.visualize(mean)
+    for digit in range(10):
+        print "Digit", digit
+        mnist.visualize(cluster_medoids1[digit])
 
-    print "= Second iteration ="
-
-    distinct_means = X[0:10].copy()
-    digit_set = set()
-
-    for i in range(len(Xin)):
-        digit = y[i]
-
-        if digit not in digit_set:
-            digit_set.add(digit)
-            distinct_means[digit] = Xin[i]
-
-            if len(digit_set) == 10:
-                break
+    print "= Second iteration"
 
     assignment2, cluster_medoids1 = kmedoids(dissimilarity_matrix, distinct_means)
 
-    for mean in cluster_medoids1:
-        mnist.visualize(mean)
+    for digit in range(10):
+        print "Digit", digit
+        mnist.visualize(cluster_medoids1[digit])
 
 
 if __name__ == "__main__":
