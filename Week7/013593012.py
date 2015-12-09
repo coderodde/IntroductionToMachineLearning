@@ -127,10 +127,7 @@ def main():
     assignment1, cluster_means1 = kmeans(Xin, X[0:10])
 
     print "= First iteration"
-
-    for digit in range(10):
-        print "Digit", digit
-        mnist.visualize(cluster_means1[digit])
+    mnist.visualize(cluster_means1)
 
     print "= Second iteration"
 
@@ -148,28 +145,18 @@ def main():
                 break
 
     assignment1, cluster_means1 = kmeans(Xin, distinct_means)
-
-    for digit in range(10):
-        print "Digit", digit
-        mnist.visualize(cluster_means1[digit])
+    mnist.visualize(cluster_means1)
 
     print "=== k-medoids ==="
     print "= First iteration"
     dissimilarity_matrix = compute_dissimilarity_matrix(Xin)
-
     assignment1, cluster_medoids1 = kmedoids(dissimilarity_matrix, X[0:10])
-
-    for digit in range(10):
-        print "Digit", digit
-        mnist.visualize(cluster_medoids1[digit])
+    mnist.visualize(cluster_medoids1)
 
     print "= Second iteration"
 
     assignment2, cluster_medoids1 = kmedoids(dissimilarity_matrix, distinct_means)
-
-    for digit in range(10):
-        print "Digit", digit
-        mnist.visualize(cluster_medoids1[digit])
+    mnist.visualize(cluster_medoids1)
 
 
 if __name__ == "__main__":
