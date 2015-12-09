@@ -44,22 +44,6 @@ def kmeans(data_matrix, initial_cluster_means):
     return assignment, cluster_means
 
 
-# def update_medoid(cluster):
-#     best_sum = 1000000000.0
-#     best_datum = None
-#
-#     for datum in cluster:
-#         sum1 = 0.0
-#
-#         for datum2 in cluster:
-#             sum1 += np.linalg.norm(datum - datum2)
-#
-#         if best_sum > sum1:
-#             best_sum = sum1
-#             best_datum = datum
-#
-#     return best_datum
-
 def update_medoids(dissimilarity_matrix, indices):
     best_cost = 1.0e9
     best_index = -1
@@ -140,15 +124,17 @@ def compute_dissimilarity_matrix(data_matrix):
 
 
 def main():
-    Xin = X[0:500]
-    dissimilarity_matrix = compute_dissimilarity_matrix(Xin)
+    print "=== k-means ==="
 
-    assignment1, cluster_means1 = kmedoids(dissimilarity_matrix, X[0:10])
+    Xin = X[0:500]
+    assignment1, cluster_means1 = kmeans(Xin, X[0:10])
+
+    print "= First iteration = "
 
     for mean in cluster_means1:
         mnist.visualize(mean)
 
-    print "Done with phase 1."
+    print "= Second iteration ="
 
     distinct_means = X[0:10].copy()
     digit_set = set()
@@ -163,10 +149,40 @@ def main():
             if len(digit_set) == 10:
                 break
 
-    assignment2, cluster_means2 = kmedoids(dissimilarity_matrix, distinct_means)
+    assignment1, cluster_means1 = kmeans(Xin, distinct_means)
 
-    for mean in cluster_means2:
+    for mean in cluster_means1:
         mnist.visualize(mean)
+
+    print "=== k-medoids ==="
+    print "= First iteration ="
+    dissimilarity_matrix = compute_dissimilarity_matrix(Xin)
+
+    assignment1, cluster_medoids1 = kmedoids(dissimilarity_matrix, X[0:10])
+
+    for mean in cluster_means1:
+        mnist.visualize(mean)
+
+    print "= Second iteration ="
+
+    distinct_means = X[0:10].copy()
+    digit_set = set()
+
+    for i in range(len(Xin)):
+        digit = y[i]
+
+        if digit not in digit_set:
+            digit_set.add(digit)
+            distinct_means[digit] = Xin[i]
+
+            if len(digit_set) == 10:
+                break
+
+    assignment2, cluster_medoids1 = kmedoids(dissimilarity_matrix, distinct_means)
+
+    for mean in cluster_medoids1:
+        mnist.visualize(mean)
+
 
 if __name__ == "__main__":
     main()
