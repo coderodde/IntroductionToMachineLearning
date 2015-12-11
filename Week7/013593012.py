@@ -70,6 +70,9 @@ def kmedoids(dissimilarity_matrix, initial_cluster_means):
             best_cluster_id = -1
             best_distance = 1000000000.0
 
+            for j in range(500):
+
+
             for k in range(10):
                 dist = np.linalg.norm(X[i] - cluster_medoids[k])
                 dist *= dist # squared Euclidean distance
@@ -135,20 +138,20 @@ def visualize_digits(assignment, data_matrix):
 def main():
     Xin = X[0:500]
 
-    # print "=== k-means ==="
-    #
-    # assignment1, cluster_means1 = kmeans(Xin, X[0:10])
-    #
-    # print "= First iteration"
-    # print "Cluster means"
-    # mnist.visualize(cluster_means1)
-    #
-    # print "Clusters"
-    #
-    # visualize_digits(assignment1, Xin)
+    print "=== k-means ==="
 
-    # print "= Second iteration"
-    #
+    assignment1, cluster_means1 = kmeans(Xin, X[0:10])
+
+    print "= First iteration"
+    print "Cluster means"
+    mnist.visualize(cluster_means1)
+
+    print "Clusters"
+
+    visualize_digits(assignment1, Xin)
+
+    print "= Second iteration"
+
     distinct_means = X[0:10].copy()
     digit_set = set()
 
@@ -164,15 +167,12 @@ def main():
 
     print digit_set
 
-    # assignment1, cluster_means1 = kmeans(Xin, distinct_means)
-    # print "Cluster means"
-    # mnist.visualize(cluster_means1)
-    #
-    # print "Clusters"
-    # visualize_digits(assignment1, Xin)
-    #
-    # exit()
-    #
+    assignment1, cluster_means1 = kmeans(Xin, distinct_means)
+    print "Cluster means"
+    mnist.visualize(cluster_means1)
+
+    print "Clusters"
+    visualize_digits(assignment1, Xin)
 
     print "=== k-medoids ==="
     dissimilarity_matrix = compute_dissimilarity_matrix(Xin)
